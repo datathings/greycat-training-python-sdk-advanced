@@ -2,3 +2,6 @@
 /.python-version
 /gcdata/
 /**/__pycache__/
+/trained-models/
+/histories/
+/configs/

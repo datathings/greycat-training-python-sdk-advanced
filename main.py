@@ -133,11 +133,11 @@ def push_results(config_path: str, model_path: str, history: dict, greycat: Grey
     train_history = np.array(history["train"])
     test_history = np.array(history["val"])
 
-    history_numpy = np.column_stack(train_history, test_history)
+    history_numpy = np.column_stack([train_history, test_history])
 
     history_table = std.core.Table.from_numpy(greycat, history_numpy)
     
-    greycat.call("project:saveModel", [config_path, model_path, history_table])
+    greycat.call("project::saveModel", [config_path, model_path, history_table])
 
 
 
@@ -149,11 +149,11 @@ if __name__ == "__main__":
     else:
         device = torch.device("cpu")
 
-    greycat: GreyCat = GreyCat("http://localhost:8080")
+    greycat_session: GreyCat = GreyCat("http://localhost:8080")
 
     train_data = processing.TrainDataset(
         id = config["dataset_id"],
-        greycat = greycat,
+        greycat = greycat_session,
         n_rows=config["dataloader"]["n_rows"],
         batch_size=config["dataloader"]["batch_size"],
         window_len=config["dataloader"]["window_len"],
@@ -162,7 +162,6 @@ if __name__ == "__main__":
 
     n_features = train_data.tensor_data.shape[1]
     config["n_features"] = n_features
-    print(n_features)
 
     print(f"Batch shape: {train_data.get(0)['x'].shape}")
     model = get_model(config, device)
@@ -173,7 +172,7 @@ if __name__ == "__main__":
     if config["training"]["save_model"]:
         now = datetime.today()
         model_name = config["model_selection"]["model_name"]
-        model_path = f"trained_models/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.pth"
+        model_path = f"trained-models/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.pth"
         history_path = f"histories/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.json"
         yaml_path = f"configs/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.yaml"
 
@@ -185,6 +184,6 @@ if __name__ == "__main__":
         with open(yaml_path, 'w') as yaml_file:
             yaml.dump(config, yaml_file, default_flow_style=False)
 
-        push_results(config_path=yaml_path, model_path=model_path, history=history)
+        push_results(config_path=yaml_path, model_path=model_path, history=history, greycat=greycat_session)
 
         print(f"Trained model saved in {model_path}")
