@@ -3,9 +3,10 @@
 This repository holds a DEMO example of the Greycat-Python binding.
 
 ## Dataset
-Get the dataset from the following link:
-
-Store under the filename `dataset.csv` in a folder called `data/`.
+Create a folder named `data/`. Open the terminal inside and run:
+```
+curl -LO https://huggingface.co/datasets/patrickfleith/controlled-anomalies-time-series-dataset/resolve/main/data.csv
+```
 
 ## Set the Python environment environment
 Using a Python environment of the version 3.11, install the required python packages:
@@ -16,6 +17,8 @@ pip install -r requirements.txt
 ## Foder structure
 
 * gc: Greycat files to define the importer and the data model.
+  - `edi/importer.gcl`: function to load the data from the CSV file to the database.
+  - `model/model.gcl`: establishes the data model of the database and the normalize function.
 * lib: Python library used by the script.
   - `architecture.py`: definition of the model class (in this case the Transformer).
   - `engine.py`: functions required to run the training loop.
