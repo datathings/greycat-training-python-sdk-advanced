@@ -10,6 +10,7 @@ fn main() {
     info("Done!");
     info("Processing data…");
     dataset!!->normalize();
+
     info("Done!");
   }
 }

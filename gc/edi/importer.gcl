@@ -8,7 +8,7 @@ fn import(path: String) {
       processed: nodeTime<nodeIndex<String, float>>::new(),
       prediction: nodeTime<nodeIndex<String, any>>::new(),
     });
-  var csvFormat = CSVFormat{
+  var csvFormat = CsvFormat{
     separator: ',',
     thousands_separator: '_',
     header_lines: 0,
