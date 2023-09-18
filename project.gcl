@@ -15,6 +15,7 @@ fn main() {
   }
 }
 
+@expose
 fn getProcessed(rows: int): Table<any> {
   if (dataset == null || dataset->processed.size() == 0) {
     throw "wrong state";
