@@ -14,12 +14,12 @@ TransformerAutoencoder:
   n_decoder_layers: 2
 
 model_selection:
-  model_lib: transformer_autoencoder
+  model_lib: architecture
   model_name: TransformerAutoencoder
 
 training:
   device: cpu
   learning_rate: 0.001
-  epochs: 10
+  epochs: 3
   val_size: 0.2
   save_model: True
