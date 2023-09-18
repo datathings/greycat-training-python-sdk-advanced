@@ -23,7 +23,7 @@ type Dataset {
         }
         var profile = profiles.get(feature);
         if (profile == null) {
-          profile = Gaussian::new();
+          profile = Gaussian{};
           profiles.set(feature, profile);
         }
         profile!!.add(value as float);
