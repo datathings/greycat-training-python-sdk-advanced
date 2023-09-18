@@ -128,6 +128,16 @@ def train_model(model: nn.Module, train_data: processing.TrainDataset, config: d
     return trained_model, history
 
 
+def push_results(config_path: str, model_path: str, history: dict):
+
+    train_history = np.array(history["train"])
+    test_history = np.array(history["val"])
+
+    history_table = np.column_stack(train_history, test_history)
+    
+    greycat.call("project:saveModel", [config_path, model_path, history_table])
+
+
 
 if __name__ == "__main__":
     config = get_config("pipelines/config.yaml")
@@ -168,5 +178,7 @@ if __name__ == "__main__":
         
         with open(yaml_path, 'w') as yaml_file:
             yaml.dump(config, yaml_file, default_flow_style=False)
+
+        push_results(config_path=yaml_path, model_path=model_path, history=history)
 
         print(f"Trained model saved in {model_path}")
