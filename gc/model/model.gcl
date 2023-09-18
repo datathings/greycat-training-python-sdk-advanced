@@ -1,7 +1,44 @@
-var dataset: node<Dataset>?;
+use util;
 
 type Dataset {
-  features: nodeTime<nodeIndex<any>>;
-  processed: nodeTime<nodeIndex<any>>;
-  prediction: nodeTime<nodeIndex<any>>;
+  features: nodeTime<nodeIndex<String, any>>;
+  processed: nodeTime<nodeIndex<String, float>>;
+  prediction: nodeTime<nodeIndex<String, any>>;
+
+  fn normalize() {
+    // Profile data
+    var profiles = Map<String, Gaussian>::new();
+    for (_, datapoint in this.features) {
+      for (feature, value in datapoint) {
+        if (!(value is float || value is int)) {
+          continue;
+        }
+        var profile = profiles.get(feature);
+        if (profile == null) {
+          profile = Gaussian::new();
+          profiles.set(feature, profile);
+        }
+        profile!!.add(value as float);
+      }
+    }
+    // Normalize data
+    for (timestamp, datapoint in this.features) {
+      var processed_datapoint = nodeIndex<String, float>::new();
+      for (feature, value in datapoint) {
+        if (!(value is float || value is int)) {
+          continue;
+        }
+        var profile = profiles.get(feature)!!;
+        var std = profile.std()!!;
+        if (std == 0.0) {
+          processed_datapoint.set(feature, 0.0);
+        } else {
+          processed_datapoint.set(feature,((value as float) - profile.avg()!!) / std);
+        }
+      }
+      this.processed.setAt(timestamp, processed_datapoint);
+    }
+  }
 }
+
+var dataset: node<Dataset>?;

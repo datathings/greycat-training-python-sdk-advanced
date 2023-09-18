@@ -8,6 +8,27 @@ fn main() {
     info("Importing data…");
     import("data/dataset.csv");
     info("Done!");
+    info("Processing data…");
+    dataset!!->normalize();
+    info("Done!");
   }
 }
 
+fn getProcessed(rows: int): Table<any> {
+  if (dataset == null || dataset->processed.size() == 0) {
+    throw "wrong state";
+  }
+  var res = Table<any>::new(dataset!!->processed.first()!!.size() + 1);
+  var row = 0;
+  for (timestamp, datapoint in dataset?->processed?) {
+    res.set(row, 0, timestamp);
+    var col = 1;
+    for (feature, value in datapoint) {
+      res.set(row, col, value);
+    }
+    if (++row == rows) {
+      break;
+    }
+  }
+  return res;
+}

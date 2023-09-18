@@ -4,9 +4,9 @@ use model;
 
 fn import(path: String) {
   dataset = node<Dataset>::new(Dataset {
-      features: nodeTime<nodeIndex<any>>::new(),
-      processed: nodeTime<nodeIndex<any>>::new(),
-      prediction: nodeTime<nodeIndex<any>>::new(),
+      features: nodeTime<nodeIndex<String, any>>::new(),
+      processed: nodeTime<nodeIndex<String, float>>::new(),
+      prediction: nodeTime<nodeIndex<String, any>>::new(),
     });
   var csvFormat = CSVFormat{
     separator: ',',
