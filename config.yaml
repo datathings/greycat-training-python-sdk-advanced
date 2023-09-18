@@ -1,0 +1,24 @@
+dataset_id: 0
+labels_path: None
+reprocess: True
+
+dataloader:
+  batch_size: 64
+  window_len: 120
+  delay: 0
+
+TransformerAutoencoder:
+  n_heads: 5
+  n_encoder_layers: 2
+  n_decoder_layers: 2
+
+model_selection:
+  model_lib: transformer_autoencoder
+  model_name: TransformerAutoencoder
+
+training:
+  device: cpu
+  learning_rate: 0.001
+  epochs: 10
+  val_size: 0.2
+  save_model: True
