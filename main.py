@@ -128,12 +128,14 @@ def train_model(model: nn.Module, train_data: processing.TrainDataset, config: d
     return trained_model, history
 
 
-def push_results(config_path: str, model_path: str, history: dict):
+def push_results(config_path: str, model_path: str, history: dict, greycat: GreyCat):
 
     train_history = np.array(history["train"])
     test_history = np.array(history["val"])
 
-    history_table = np.column_stack(train_history, test_history)
+    history_numpy = np.column_stack(train_history, test_history)
+
+    history_table = std.core.Table.from_numpy(greycat, history_numpy)
     
     greycat.call("project:saveModel", [config_path, model_path, history_table])
 
