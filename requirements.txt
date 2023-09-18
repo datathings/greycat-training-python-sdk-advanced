@@ -1,0 +1,27 @@
+cmake==3.27.5
+filelock==3.12.4
+GreyCat @ https://get.greycat.io/files/sdk/python/testing/6.1/greycat-6.1.29+testing-py3-none-any.whl#sha256=a3e999cd49e66ea12b2012e3d1f2057b3a29b6d9dfe186f02980eea004fa8dfd
+Jinja2==3.1.2
+lit==16.0.6
+MarkupSafe==2.1.3
+mpmath==1.3.0
+networkx==3.1
+numpy==1.26.0
+nvidia-cublas-cu11==11.10.3.66
+nvidia-cuda-cupti-cu11==11.7.101
+nvidia-cuda-nvrtc-cu11==11.7.99
+nvidia-cuda-runtime-cu11==11.7.99
+nvidia-cudnn-cu11==8.5.0.96
+nvidia-cufft-cu11==10.9.0.58
+nvidia-curand-cu11==10.2.10.91
+nvidia-cusolver-cu11==11.4.0.1
+nvidia-cusparse-cu11==11.7.4.91
+nvidia-nccl-cu11==2.14.3
+nvidia-nvtx-cu11==11.7.91
+PyYAML==6.0.1
+sympy==1.12
+termcolor==2.3.0
+torch==2.0.1
+tqdm==4.66.1
+triton==2.0.0
+typing_extensions==4.8.0
