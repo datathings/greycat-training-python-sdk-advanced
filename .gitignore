@@ -1,2 +1,4 @@
 /data/
-.python-version
+/.python-version
+/gcdata/
+/**/__pycache__/

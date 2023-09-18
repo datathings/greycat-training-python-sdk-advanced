@@ -23,9 +23,9 @@ fn import(path: String) {
     throw "${path} is empty";
   }
 
-  while (csvIn!!.available() > 0) {
+  while (csvIn.available() > 0) {
     var datapoint = nodeIndex<String, any>::new();
-    var values = csvIn!!.read() as Array<any>;
+    var values = csvIn.read() as Array<any>;
     var timestamp = Date::parse(values[0] as String, "%Y-%m-%d %H:%M:%S", null).toTime();
     for (index, value in values[1..]) {
       datapoint.set(headers[index], value);

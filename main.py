@@ -142,7 +142,7 @@ def push_results(config_path: str, model_path: str, history: dict, greycat: Grey
 
 
 if __name__ == "__main__":
-    config = get_config("pipelines/config.yaml")
+    config = get_config("config.yaml")
     
     if config["training"]["device"] == "gpu":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -154,7 +154,7 @@ if __name__ == "__main__":
     train_data = processing.TrainDataset(
         id = config["dataset_id"],
         greycat = greycat,
-        n_rows=config["preprocessing"]["n_rows"],
+        n_rows=config["dataloader"]["n_rows"],
         batch_size=config["dataloader"]["batch_size"],
         window_len=config["dataloader"]["window_len"],
         delay=config["dataloader"]["delay"]
