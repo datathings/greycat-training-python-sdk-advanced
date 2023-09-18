@@ -1,9 +1,17 @@
 use util;
 
+type Model {
+  configPath: String;
+  modelPath: String;
+  trainLoss: nodeList<float>;
+  testLoss: nodeList<float>;
+}
+
 type Dataset {
   features: nodeTime<nodeIndex<String, any>>;
   processed: nodeTime<nodeIndex<String, float>>;
   prediction: nodeTime<nodeIndex<String, any>>;
+  trained_models: nodeTime<Model>;
 
   fn normalize() {
     // Profile data

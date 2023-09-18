@@ -34,3 +34,23 @@ fn getProcessed(rows: int): Table<any> {
   }
   return res;
 }
+
+@expose
+@write
+fn saveModel(configPath: String, modelPath: String, losses: Table<float>) {
+  if (dataset == null) {
+    throw "wrong state";
+  }
+  var timestamp = time::now();
+  dataset!!->trained_models.setAt(timestamp, Model {
+      configPath: configPath,
+      modelPath: modelPath,
+      trainLoss: nodeList<float>::new(),
+      testLoss: nodeList<float>::new(),
+    });
+  var trained_model = dataset!!->trained_models.getAt(timestamp)!!;
+  for (var row = 0; row < losses.rows(); ++row) {
+    trained_model.trainLoss.add(losses.get(row, 0));
+    trained_model.testLoss.add(losses.get(row, 1));
+  }
+}
