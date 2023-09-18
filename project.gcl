@@ -27,6 +27,7 @@ fn getProcessed(rows: int): Table<any> {
     var col = 1;
     for (feature, value in datapoint) {
       res.set(row, col, value);
+      ++col;
     }
     if (++row == rows) {
       break;

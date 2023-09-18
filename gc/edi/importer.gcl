@@ -7,7 +7,7 @@ fn import(path: String) {
       features: nodeTime<nodeIndex<String, any>>::new(),
       processed: nodeTime<nodeIndex<String, float>>::new(),
       prediction: nodeTime<nodeIndex<String, any>>::new(),
-      trained_models: nodeTime<Model>::new();
+      trained_models: nodeTime<Model>::new(),
     });
   var csvFormat = CsvFormat{
     separator: ',',

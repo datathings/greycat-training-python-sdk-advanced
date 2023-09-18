@@ -36,7 +36,7 @@ def get_model(config: dict, device: torch.device) -> nn.Module:
     class_obj = getattr(module, name)
 
     parameters = config[name]
-    parameters["n_features"] = config["preprocessing"]["n_features"]
+    parameters["n_features"] = config["n_features"]
     model = class_obj(parameters)
     model = model.float().to(device)
 
@@ -159,6 +159,10 @@ if __name__ == "__main__":
         window_len=config["dataloader"]["window_len"],
         delay=config["dataloader"]["delay"]
     )
+
+    n_features = train_data.tensor_data.shape[1]
+    config["n_features"] = n_features
+    print(n_features)
 
     print(f"Batch shape: {train_data.get(0)['x'].shape}")
     model = get_model(config, device)

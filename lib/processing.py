@@ -16,8 +16,9 @@ class TrainDataset:
     def __init__(self, id: int, greycat: GreyCat, n_rows: int, batch_size: int, window_len: int, delay: int, substract: bool = False):
 
         print("\nGetting processed table from Greycat.")
-        table: std.core.Table = greycat.call("project::getProcessed", [id, n_rows, False])
+        table: std.core.Table = greycat.call("project::getProcessed", [n_rows])
         numpy_data = table.to_numpy()
+        numpy_data = np.array(numpy_data[:,1:], dtype=float)
         tensor_data = torch.from_numpy(numpy_data)
         print(f"Tensor data: {tensor_data.shape}")
 

@@ -3,7 +3,7 @@ labels_path: None
 reprocess: True
 
 dataloader:
-  n_rows: 5000
+  n_rows: 1000
   batch_size: 64
   window_len: 120
   delay: 0
