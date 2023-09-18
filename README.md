@@ -2,6 +2,10 @@
 
 This repository holds a DEMO example of the Greycat-Python binding.
 
+## How to set the environment
+Install the python packages:
+
+
 ## TODO
 
 - [ ] Document data/ structure (\<input file\>.csv, models directory outputs, etc)
