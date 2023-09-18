@@ -1,0 +1,37 @@
+use io;
+
+use model;
+
+fn import(path: String) {
+  dataset = node<Dataset>::new(Dataset {
+      features: nodeTime<nodeIndex<any>>::new(),
+      processed: nodeTime<nodeIndex<any>>::new(),
+      prediction: nodeTime<nodeIndex<any>>::new(),
+    });
+  var csvFormat = CSVFormat{
+    separator: ',',
+    thousands_separator: '_',
+    header_lines: 0,
+  };
+
+  var csvIn = CsvReader::new(path, csvFormat);
+  if (csvIn == null) {
+    throw "Cannot open ${path}";
+  }
+  var headers: Array<String>;
+  if (csvIn!!.available() > 0) {
+    headers = csvIn!!.read() as Array<String>;
+  } else {
+    throw "${path} is empty";
+  }
+
+  while (csvIn!!.available() > 0) {
+    var datapoint = nodeIndex<any>::new();
+    var values = csvIn!!.read() as Array<any>;
+    var timestamp = Date::parse(values[0] as String, "%Y-%m-%d %H:%M:%S", null).toTime();
+    for (index, value in values[1..]) {
+      datapoint.set(headers[index], value);
+    }
+    dataset->features.setAt(timestamp, datapoint);
+  }
+}

@@ -1,0 +1,13 @@
+@include("gc");
+
+use model;
+use importer;
+
+fn main() {
+  if (dataset == null) {
+    info("Importing data…");
+    import("data/dataset.csv");
+    info("Done!");
+  }
+}
+

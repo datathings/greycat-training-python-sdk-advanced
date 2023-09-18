@@ -1,0 +1,7 @@
+var dataset: node<Dataset>?;
+
+type Dataset {
+  features: nodeTime<nodeIndex<any>>;
+  processed: nodeTime<nodeIndex<any>>;
+  prediction: nodeTime<nodeIndex<any>>;
+}
