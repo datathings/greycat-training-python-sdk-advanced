@@ -6,9 +6,9 @@ This repository holds a DEMO example of the Greycat-Python binding.
 
 - [ ] Document data/ structure (\<input file\>.csv, models directory outputs, etc)
 - [ ] GreyCat:
-  - [ ] Load data
-  - [ ] Prepare data
-  - [ ] Endpoint to serve prepared data
+  - [x] Load data
+  - [x] Prepare data
+  - [x] Endpoint to serve prepared data
   - [ ] Endpoint to save model details
 - [ ] Python
   - [ ] Pull prepared
