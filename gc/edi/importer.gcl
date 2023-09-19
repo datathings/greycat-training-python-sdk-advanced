@@ -1,10 +1,12 @@
 use io;
+use util;
 
 use model;
 
 fn import(path: String) {
   dataset = node<Dataset>::new(Dataset {
       features: nodeTime<nodeIndex<String, any>>::new(),
+      profiles: nodeIndex<String, Gaussian>::new(),
       processed: nodeTime<nodeIndex<String, float>>::new(),
       prediction: nodeTime<nodeIndex<String, any>>::new(),
       trained_models: nodeTime<Model>::new(),
@@ -21,6 +23,10 @@ fn import(path: String) {
     headers = csvIn.read() as Array<String>;
   } else {
     throw "${path} is empty";
+  }
+  var profiles = Array<Gaussian>::new(headers.size());
+  for (var index = 1; index < headers.size(); ++index) {
+    
   }
 
   while (csvIn.available() > 0) {

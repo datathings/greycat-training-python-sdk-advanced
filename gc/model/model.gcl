@@ -9,22 +9,22 @@ type Model {
 
 type Dataset {
   features: nodeTime<nodeIndex<String, any>>;
+  profiles: nodeIndex<String, Gaussian>;
   processed: nodeTime<nodeIndex<String, float>>;
   prediction: nodeTime<nodeIndex<String, any>>;
   trained_models: nodeTime<Model>;
 
   fn normalize() {
     // Profile data
-    var profiles = Map<String, Gaussian>::new();
     for (_, datapoint in this.features) {
       for (feature, value in datapoint) {
         if (!(value is float || value is int)) {
           continue;
         }
-        var profile = profiles.get(feature);
+        var profile = this.profiles.get(feature);
         if (profile == null) {
           profile = Gaussian{};
-          profiles.set(feature, profile);
+          this.profiles.set(feature, profile);
         }
         profile!!.add(value as float);
       }
@@ -36,7 +36,7 @@ type Dataset {
         if (!(value is float || value is int)) {
           continue;
         }
-        var profile = profiles.get(feature)!!;
+        var profile = this.profiles.get(feature)!!;
         var std = profile.std()!!;
         if (std == 0.0) {
           processed_datapoint.set(feature, 0.0);

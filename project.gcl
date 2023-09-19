@@ -7,11 +7,9 @@ fn main() {
   if (dataset == null) {
     info("Importing data…");
     import("data/dataset.csv");
-    info("Done!");
     info("Processing data…");
     dataset!!->normalize();
-
-    info("Done!");
+    info("Committing data to disk…");
   }
 }
 
