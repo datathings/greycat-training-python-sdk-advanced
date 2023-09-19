@@ -1,4 +1,4 @@
-@include("gc");
+@include("server");
 
 use io;
 use runtime;
