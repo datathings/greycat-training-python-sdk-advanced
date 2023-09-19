@@ -16,6 +16,7 @@ type Dataset {
 
   fn normalize() {
     // Normalize data
+    var row = 0;
     for (timestamp, datapoint in this.features) {
       var processed_datapoint = nodeIndex<String, float>::new();
       for (feature, value in datapoint) {
@@ -27,12 +28,15 @@ type Dataset {
         if (std == 0.0) {
           processed_datapoint.set(feature, 0.0);
         } else {
-          processed_datapoint.set(feature,((value as float) - profile.avg()!!) / std);
+          processed_datapoint.set(feature, ((value as float) - profile.avg()!!) / std);
         }
       }
       this.processed.setAt(timestamp, processed_datapoint);
+      if (++row % 100_000 == 0) {
+        debug("Normalized ${row} rows.");
+      }
     }
   }
 }
 
-var dataset: node<Dataset>?;
+var dataset: node<Dataset>?; 

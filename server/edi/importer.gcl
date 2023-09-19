@@ -11,7 +11,7 @@ fn importAndProfile(path: String) {
       prediction: nodeTime<nodeIndex<String, any>>::new(),
       trained_models: nodeTime<Model>::new(),
     });
-  var csvFormat = CsvFormat{
+  var csvFormat = CsvFormat {
     separator: ',',
     thousands_separator: '_',
     header_lines: 0,
@@ -26,12 +26,11 @@ fn importAndProfile(path: String) {
   }
   var profiles = Array<Gaussian>::new(headers.size());
   for (index, header in headers[1..]) {
-    var profile = Gaussian{};
+    var profile = Gaussian {};
     profiles[index] = profile;
     dataset->profiles.set(header, profile);
   }
 
-  // while (csvIn.available() > 0) {
   for (var row = 0; row < 500_000 && csvIn.available() > 0; ++row) {
     var datapoint = nodeIndex<String, any>::new();
     var values = csvIn.read() as Array<any>;
@@ -44,8 +43,8 @@ fn importAndProfile(path: String) {
       profiles[index].add(value as float);
     }
     dataset->features.setAt(timestamp, datapoint);
-    if ((row + 1) % 100_000 == 0){
-      info("Imported ${row + 1} rows.");
+    if ((row + 1) % 100_000 == 0) {
+      debug("Imported ${row + 1} rows.");
     }
   }
 }
