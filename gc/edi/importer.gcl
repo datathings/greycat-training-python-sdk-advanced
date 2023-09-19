@@ -31,7 +31,12 @@ fn import(path: String) {
       datapoint.set(headers[index], value);
     }
     dataset->features.setAt(timestamp, datapoint);
-    if (++rowCount == 500_000) {
+
+    if (++rowCount%100_000 == 0){
+      info("Imported ${rowCount} rows.");
+    }
+
+    if (rowCount == 500_000) {
       break;
     }
   }

@@ -6,7 +6,7 @@ use importer;
 fn main() {
   if (dataset == null) {
     info("Importing data…");
-    import("data/dataset.csv");
+    import("data/data.csv");
     info("Done!");
     info("Processing data…");
     dataset!!->normalize();
@@ -20,7 +20,8 @@ fn getProcessed(cols: int, rows: int): Table<any> {
   if (dataset == null || dataset->processed.size() == 0) {
     throw "wrong state";
   }
-  var res = Table<any>::new(dataset!!->processed.first()!!.size() + 1);
+  var perc: float;
+  var res = Table<any>::new(cols + 1);
   var row = 0;
   for (timestamp, datapoint in dataset?->processed?) {
     res.set(row, 0, timestamp);
@@ -31,7 +32,11 @@ fn getProcessed(cols: int, rows: int): Table<any> {
         break;
       }
     }
-    if (++row == rows) {
+    if (++row%5_000 == 0){
+      perc = 100*row / rows as float;
+      info("Processed ${perc}%: ${row} rows.");
+    }
+    if (row == rows) {
       break;
     }
   }
