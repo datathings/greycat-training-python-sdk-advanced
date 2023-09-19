@@ -1,6 +1,8 @@
+from itertools import repeat
 import numpy as np
 import time
 import torch
+from tqdm import tqdm
 from greycat import *
 
 class TrainDataset:
@@ -21,7 +23,7 @@ class TrainDataset:
         user_id: int = task.user_id()
         task_id: int = task.task_id()
         status: std.runtime.TaskStatus
-        while True:
+        for i in tqdm(repeat(None), bar_format='{elapsed}'):
             status = std.runtime.Task.info(greycat, user_id, task_id).status()
             match status.key:
                 case "ended":
@@ -31,7 +33,6 @@ class TrainDataset:
                 case "error":
                     raise RuntimeError("Task error")
                 case _:
-                    print(status.key)
                     time.sleep(1)
                     pass
         table: std.core.Table = greycat.call("project::getProcessed", [user_id, task_id])
