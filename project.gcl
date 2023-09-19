@@ -42,11 +42,6 @@ task processedToTable(cols: int, rows: int): Table<any> {
 }
 
 @expose
-fn getProcessed(userId: int, taskId: int): Table<any> {
-  return GcbReader::new("gcdata/files/${userId}/tasks/${taskId}/result.gcb").read() as Table<any>;
-}
-
-@expose
 @write
 fn saveModel(configPath: String, modelPath: String, losses: Table<float>) {
   if (dataset == null) {

@@ -20,10 +20,10 @@ class TrainDataset:
 
         print("\nGetting processed table from Greycat.")
         task: std.runtime.Task = greycat.call("project::processedToTable", [n_features, n_rows])
-        user_id: int = task.user_id()
-        task_id: int = task.task_id()
+        user_id: c_int64 = task.user_id()
+        task_id: c_int64 = task.task_id()
         status: std.runtime.TaskStatus
-        for i in tqdm(repeat(None), bar_format='{elapsed}'):
+        for _ in tqdm(repeat(None), bar_format='{elapsed}'):
             status = std.runtime.Task.info(greycat, user_id, task_id).status()
             match status.key:
                 case "ended":
@@ -35,7 +35,7 @@ class TrainDataset:
                 case _:
                     time.sleep(1)
                     pass
-        table: std.core.Table = greycat.call("project::getProcessed", [user_id, task_id])
+        table: std.core.Table = greycat.fetch(f"files/{user_id.value}/tasks/{task_id.value}/result.gcb")
         numpy_data = table.to_numpy()
         numpy_data = np.array(numpy_data[:,1:], dtype=float)
         tensor_data = torch.from_numpy(numpy_data)
