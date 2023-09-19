@@ -1,63 +1,72 @@
 # Python SDK advanced
 
-This repository holds a DEMO example of the Greycat-Python binding.
+This advanced training will illustrate how one can prepare and store data in GreyCat while leveraging Python dedicated libraries to train machine learning models.
 
-## Dataset
-Create a folder named `data/`. Open the terminal inside and run:
-```
+## Setup
+
+### Prerequisites
+
+- Python >= 3.11
+- pip
+
+### Dataset
+
+In this training we use the following dataset:
+
+> Patrick Fleith. (2023). Controlled Anomalies Time Series (CATS) Dataset (Version 2) [Data set]. Solenix Engineering GmbH. https://doi.org/10.5281/zenodo.8338435
+
+```bash
+mkdir -p data
+cd data
 curl -LO https://huggingface.co/datasets/patrickfleith/controlled-anomalies-time-series-dataset/resolve/main/data.csv
+cd ..
 ```
 
-## Set the Python environment environment
-Using a Python environment of the version 3.11, install the required python packages:
-```
-pip install -r requirements.txt
-```
+### Install Python requirements
 
-## Foder structure
-
-* gc: Greycat files to define the importer and the data model.
-  - `edi/importer.gcl`: function to load the data from the CSV file to the database.
-  - `model/model.gcl`: establishes the data model of the database and the normalize function.
-* lib: Python library used by the script.
-  - `architecture.py`: definition of the model class (in this case the Transformer).
-  - `engine.py`: functions required to run the training loop.
-  - `processing.py`: defines the data loader for training each optimization step.
-  - `utils.py`: auxiliary functions.
-* `main.py`: script to be executed in order to run the experiment.
-* `project.gcl`: Greycat file containing the functions to get and insert data in the database.
-* `config.yaml`: parameters of the execution.
-* configs(*): historical of config files ever run. Datetime in the filename.
-* histories(*): historical of train/test loss function curves. Datetime in the filename.
-* trained-models(*): Folder holding all the models generated as a result of training. Datetime in the filename.
-
-(*) These folders are not existing by default, but they are created when needed in case they don't exist.
-
-## Execution
-Before running the script, you should have an open Greycat session:
-```
-greycat serve --user=1
-```
-The first time you execute this command, the dataset will be imported and preprocessed in Greycat.
-
-All the parameters of the execution are in the `config.yaml` file.
-
-In order to run the script:
-```
-python -m main
+```bash
+python3 -m pip install -r requirements.txt
 ```
 
+## Folder structure
 
+```
+.
+├── configs               # History of config files ever run. Datetime in the filename.
+├── config.yaml
+├── data
+│   ├── data.csv
+│   └── dataset.csv
+├── gc                    # GreyCat source files implementing importer and data model.
+│   ├── edi
+│   │   └── importer.gcl  # Function to load the data from the CSV file to the database.
+│   └── model
+│       └── model.gcl     # Implementation of the data model of the database, which comes with a normalize method.
+├── histories             # History of train/test loss function curves. Datetime in the filename.
+├── lib                   # Python library used by the script.
+│   ├── architecture.py   # Definition of the model class (in this case the Transformer).
+│   ├── engine.py         # Functions required to run the training loop.
+│   ├── processing.py     # Implementation of the data loader for training each optimization step.
+│   └── utils.py          # Auxiliary functions.
+├── LICENSE.txt
+├── main.py               # Script to be executed in order to run the experiment.
+├── project.gcl           # GreyCat file containing the functions to get and insert data in the database.
+├── README.md
+├── requirements.txt
+└── trained-models        # Folder holding all the models generated as a result of training. Datetime in the filename.
+```
 
-## TODO
+`config`, `histories` and `trained-models` folders are not existing by default, but they are created when needed in case they don't exist.
 
-- [ ] Document data/ structure (\<input file\>.csv, models directory outputs, etc)
-- [x] GreyCat:
-  - [x] Load data
-  - [x] Prepare data
-  - [x] Endpoint to serve prepared data
-  - [x] Endpoint to save model details
-- [x] Python
-  - [x] Pull prepared
-  - [x] Train
-  - [x] Push back model details (model path, config path, train/test loss history)
+### Run
+
+- Start the GreyCat server:
+  ```bash
+  greycat serve --user=1
+  ```
+  The first time you execute this command, the dataset will be imported and preprocessed in GreyCat.
+
+- All the parameters of the execution are in the `config.yaml` file; in order to run the script:
+  ```bash
+  python -m main
+  ```
