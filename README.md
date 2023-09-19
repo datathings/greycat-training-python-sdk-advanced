@@ -34,11 +34,6 @@ python3 -m pip install -r requirements.txt
 ├── config.yaml           # Parameters of the execution.
 ├── data
 │   └── dataset.csv
-├── gc                    # GreyCat source files implementing importer and data model.
-│   ├── edi
-│   │   └── importer.gcl  # Function to load the data from the CSV file to the database.
-│   └── model
-│       └── model.gcl     # Implementation of the data model of the database, which comes with a normalize method.
 ├── histories             # History of train/test loss function curves. Datetime in the filename.
 ├── lib                   # Python library used by the script.
 │   ├── architecture.py   # Definition of the model class (in this case the Transformer).
@@ -50,6 +45,11 @@ python3 -m pip install -r requirements.txt
 ├── project.gcl           # GreyCat file containing the functions to get and insert data in the database.
 ├── README.md
 ├── requirements.txt
+├── server                # GreyCat source files implementing importer and data model.
+│   ├── edi
+│   │   └── importer.gcl  # Function to load the data from the CSV file to the database.
+│   └── model
+│       └── model.gcl     # Implementation of the data model of the database, which comes with a normalize method.
 └── trained-models        # Folder holding all the models generated as a result of training. Datetime in the filename.
 ```
 
