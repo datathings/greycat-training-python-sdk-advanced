@@ -3,7 +3,7 @@ use util;
 
 use model;
 
-fn import(path: String) {
+fn importAndProfile(path: String) {
   dataset = node<Dataset>::new(Dataset {
       features: nodeTime<nodeIndex<String, any>>::new(),
       profiles: nodeIndex<String, Gaussian>::new(),
@@ -25,21 +25,24 @@ fn import(path: String) {
     throw "${path} is empty";
   }
   var profiles = Array<Gaussian>::new(headers.size());
-  for (var index = 1; index < headers.size(); ++index) {
-    
+  for (index, header in headers[1..]) {
+    var profile = Gaussian{};
+    profiles[index] = profile;
+    dataset->profiles.set(header, profile);
   }
 
-  var rowCount = 0;
-  while (csvIn.available() > 0) {
+  // while (csvIn.available() > 0) {
+  for (var row = 0; row < 500_000 && csvIn.available() > 0; ++row) {
     var datapoint = nodeIndex<String, any>::new();
     var values = csvIn.read() as Array<any>;
     var timestamp = Date::parse(values[0] as String, "%Y-%m-%d %H:%M:%S", null).toTime();
     for (index, value in values[1..]) {
       datapoint.set(headers[index], value);
+      if (!(value is float || value is int)) {
+        continue;
+      }
+      profiles[index].add(value as float);
     }
     dataset->features.setAt(timestamp, datapoint);
-    if (++rowCount == 500_000) {
-      break;
-    }
   }
 }

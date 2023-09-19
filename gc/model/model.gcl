@@ -15,20 +15,6 @@ type Dataset {
   trained_models: nodeTime<Model>;
 
   fn normalize() {
-    // Profile data
-    for (_, datapoint in this.features) {
-      for (feature, value in datapoint) {
-        if (!(value is float || value is int)) {
-          continue;
-        }
-        var profile = this.profiles.get(feature);
-        if (profile == null) {
-          profile = Gaussian{};
-          this.profiles.set(feature, profile);
-        }
-        profile!!.add(value as float);
-      }
-    }
     // Normalize data
     for (timestamp, datapoint in this.features) {
       var processed_datapoint = nodeIndex<String, float>::new();
