@@ -65,5 +65,5 @@ python3 -m pip install -r requirements.txt
 
 - All the parameters of the execution are in the `config.yaml` file; in order to run the script:
   ```bash
-  python -m main
+  python3 -m main
   ```
