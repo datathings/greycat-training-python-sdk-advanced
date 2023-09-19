@@ -1,6 +1,4 @@
 dataset_id: 0
-labels_path: None
-reprocess: True
 
 dataloader:
   n_features: 18

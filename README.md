@@ -67,3 +67,31 @@ python3 -m pip install -r requirements.txt
   ```bash
   python3 -m main
   ```
+
+### Config parameters
+```
+dataset_id: (int)           # id of the dataset in the Greycat database.
+
+dataloader:
+  n_features: (int)         # number of features to use when training (must be multiple of TransformerAutoencoder.n_heads).
+  n_rows: (int)             # number of rows to load for training.
+  batch_size: (int)         # number of sequences to be forward and back-propagated in parallel in each training iteration.
+  window_len: (int)         # number of time steps of each sequence.
+  delay: (int)              # difference in time steps between the input and target output sequence.
+
+TransformerAutoencoder:
+  n_heads: (int)            # number of heads of the attention layers (must be divisor of dataloader.n_features).
+  n_encoder_layers: (int)   # number of layers (Attention + Feed Forward) of the encoding part.
+  n_decoder_layers: (int)   # number of layers (Attention + Feed Forward) of the decoding part.
+
+model_selection:
+  model_lib: (string)       # name of the python module where the model architecture is defined.
+  model_name: (string)      # name of the model architecture class.
+
+training:
+  device: (string)          # choose between cpu or gpu.
+  learning_rate: (float)    # learning rate of the optimizer.
+  epochs: (int)             # number of times all the dataset will be sweeped.
+  val_size: (float)         # between 0 and 1, the proportion of the dataset reserved for validate the results.
+  save_model: (bool)        # whether you want to save results and trained model, and push the information back to GreyCat.
+```
