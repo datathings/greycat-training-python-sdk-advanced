@@ -5,9 +5,9 @@ use importer;
 
 fn main() {
   if (dataset == null) {
-    info("Importing data…");
-    import("data/dataset.csv");
-    info("Processing data…");
+    info("Importing & profiling data…");
+    importAndProfile("data/dataset.csv");
+    info("Normalizing data…");
     dataset!!->normalize();
     info("Committing data to disk…");
   }
