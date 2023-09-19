@@ -23,6 +23,7 @@ if __name__ == "__main__":
     train_data = processing.TrainDataset(
         id = config["dataset_id"],
         greycat = greycat_session,
+        n_features=config["dataloader"]["n_features"],
         n_rows=config["dataloader"]["n_rows"],
         batch_size=config["dataloader"]["batch_size"],
         window_len=config["dataloader"]["window_len"],
