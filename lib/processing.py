@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import torch
 from greycat import *
 
@@ -16,7 +17,24 @@ class TrainDataset:
     def __init__(self, id: int, greycat: GreyCat, n_features: int, n_rows: int, batch_size: int, window_len: int, delay: int, substract: bool = False):
 
         print("\nGetting processed table from Greycat.")
-        table: std.core.Table = greycat.call("project::getProcessed", [n_features, n_rows])
+        task: std.runtime.Task = greycat.call("project::processedToTable", [n_features, n_rows])
+        user_id: int = task.user_id()
+        task_id: int = task.task_id()
+        status: std.runtime.TaskStatus
+        while True:
+            status = std.runtime.Task.info(greycat, user_id, task_id).status()
+            match status.key:
+                case "ended":
+                    break
+                case "cancelled":
+                    raise RuntimeError("Task cancelled")
+                case "error":
+                    raise RuntimeError("Task error")
+                case _:
+                    print(status.key)
+                    time.sleep(1)
+                    pass
+        table: std.core.Table = greycat.call("project::getProcessed", [user_id, task_id])
         numpy_data = table.to_numpy()
         numpy_data = np.array(numpy_data[:,1:], dtype=float)
         tensor_data = torch.from_numpy(numpy_data)
