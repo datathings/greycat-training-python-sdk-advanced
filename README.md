@@ -17,9 +17,7 @@ In this training we use the following dataset:
 
 ```bash
 mkdir -p data
-cd data
-curl -LO https://huggingface.co/datasets/patrickfleith/controlled-anomalies-time-series-dataset/resolve/main/data.csv
-cd ..
+curl -L https://huggingface.co/datasets/patrickfleith/controlled-anomalies-time-series-dataset/resolve/main/data.csv > data/dataset.csv
 ```
 
 ### Install Python requirements
@@ -33,9 +31,8 @@ python3 -m pip install -r requirements.txt
 ```
 .
 ├── configs               # History of config files ever run. Datetime in the filename.
-├── config.yaml
+├── config.yaml           # Parameters of the execution.
 ├── data
-│   ├── data.csv
 │   └── dataset.csv
 ├── gc                    # GreyCat source files implementing importer and data model.
 │   ├── edi
