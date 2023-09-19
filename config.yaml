@@ -3,13 +3,14 @@ labels_path: None
 reprocess: True
 
 dataloader:
+  n_features: 18
   n_rows: 1000
   batch_size: 64
   window_len: 120
   delay: 0
 
 TransformerAutoencoder:
-  n_heads: 5
+  n_heads: 6
   n_encoder_layers: 2
   n_decoder_layers: 2
 

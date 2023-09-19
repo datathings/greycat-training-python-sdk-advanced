@@ -29,6 +29,7 @@ fn import(path: String) {
     
   }
 
+  var rowCount = 0;
   while (csvIn.available() > 0) {
     var datapoint = nodeIndex<String, any>::new();
     var values = csvIn.read() as Array<any>;
@@ -37,5 +38,8 @@ fn import(path: String) {
       datapoint.set(headers[index], value);
     }
     dataset->features.setAt(timestamp, datapoint);
+    if (++rowCount == 500_000) {
+      break;
+    }
   }
 }

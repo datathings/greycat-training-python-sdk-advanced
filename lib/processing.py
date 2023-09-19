@@ -13,10 +13,10 @@ class TrainDataset:
         delay (int): time shift between the inputs and the targets.
 
     """
-    def __init__(self, id: int, greycat: GreyCat, n_rows: int, batch_size: int, window_len: int, delay: int, substract: bool = False):
+    def __init__(self, id: int, greycat: GreyCat, n_features: int, n_rows: int, batch_size: int, window_len: int, delay: int, substract: bool = False):
 
         print("\nGetting processed table from Greycat.")
-        table: std.core.Table = greycat.call("project::getProcessed", [n_rows])
+        table: std.core.Table = greycat.call("project::getProcessed", [n_features, n_rows])
         numpy_data = table.to_numpy()
         numpy_data = np.array(numpy_data[:,1:], dtype=float)
         tensor_data = torch.from_numpy(numpy_data)
