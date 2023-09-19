@@ -16,7 +16,7 @@ fn main() {
 }
 
 @expose
-fn getProcessed(rows: int): Table<any> {
+fn getProcessed(cols: int, rows: int): Table<any> {
   if (dataset == null || dataset->processed.size() == 0) {
     throw "wrong state";
   }
@@ -27,7 +27,9 @@ fn getProcessed(rows: int): Table<any> {
     var col = 1;
     for (feature, value in datapoint) {
       res.set(row, col, value);
-      ++col;
+      if (++col == cols + 1) {
+        break;
+      }
     }
     if (++row == rows) {
       break;
