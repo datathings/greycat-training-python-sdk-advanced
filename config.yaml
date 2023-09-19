@@ -4,7 +4,7 @@ reprocess: True
 
 dataloader:
   n_features: 18
-  n_rows: 1000
+  n_rows: 20_000
   batch_size: 64
   window_len: 120
   delay: 0
@@ -21,6 +21,6 @@ model_selection:
 training:
   device: cpu
   learning_rate: 0.001
-  epochs: 3
+  epochs: 10
   val_size: 0.2
   save_model: True
