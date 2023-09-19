@@ -44,8 +44,8 @@ fn importAndProfile(path: String) {
       profiles[index].add(value as float);
     }
     dataset->features.setAt(timestamp, datapoint);
-    if (row%100_000 == 0){
-      info("Imported ${row} rows.");
+    if ((row + 1) % 100_000 == 0){
+      info("Imported ${row + 1} rows.");
     }
   }
 }
