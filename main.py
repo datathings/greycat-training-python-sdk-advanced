@@ -43,17 +43,13 @@ if __name__ == "__main__":
         now = datetime.today()
         model_name = config["model_selection"]["model_name"]
         model_path = f"trained-models/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.pth"
-        history_path = f"histories/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.json"
         yaml_path = f"configs/{model_name}__{now.year}-{now.month}-{now.day}--{now.hour}:{now.minute}:{now.second}.yaml"
 
-        for folder in ["trained-models", "histories", "configs"]:
+        for folder in ["trained-models", "configs"]:
             if not os.path.isdir(folder):
                 os.mkdir(folder)
 
         torch.save(model, model_path)
-
-        with open(history_path, "w") as outfile:
-            json.dump(history, outfile, indent=4)
         
         with open(yaml_path, 'w') as yaml_file:
             yaml.dump(config, yaml_file, default_flow_style=False)
