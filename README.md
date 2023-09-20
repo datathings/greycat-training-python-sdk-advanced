@@ -61,6 +61,11 @@ python3 -m pip install -r requirements.txt
   greycat serve --user=1
   ```
   The first time you execute this command, the dataset will be imported and preprocessed in GreyCat.
+  - By default the disk storage is limited to 10240MB. If one wants to import the whole dataset it might be necessary to raise this limit:
+    ```bash
+    echo 'GREYCAT_STORE=16384' > .env
+    ```
+    It is important to notice that on Windows systems, a space of this size is fully reserved as soon as GreyCat starts.
 
 - All the parameters of the execution are in the `config.yaml` file; in order to run the script:
   ```bash
